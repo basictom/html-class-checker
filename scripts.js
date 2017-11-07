@@ -1,14 +1,16 @@
 $(document).ready(function() {
-  $('#checkIt').click(function() {
+  $('#sendIt').click(function() {
     var userInput = $('#inputHTML').val();
     let fail = $('#fail').text();
-    let pass = $('#match').text();
+    let pass = $('#extraClasses').text();
     userInput = $.trim(userInput);
     let styleTop = userInput.indexOf("<style");
     let styleBott = userInput.indexOf("</style>");
     let styleTag = styleBott - styleTop;
     let newArray = [];
     let styles = [];
+
+    clearDivs();
 
     $(userInput).find('[class]').each(function(index){
       var clss = $(this).attr('class');
@@ -26,13 +28,14 @@ $(document).ready(function() {
         alert("No classes were found.");
       }
 
-      if(userInput.indexOf("style")==-1){
+      });
+
+      if(userInput.indexOf("<style")==-1 || userInput.indexOf("<style") == ""){
         alert("No style tag in head!!");
+        clearDivs();
       }else{
         styles = userInput.substr(styleTop, styleTag);
       }
-
-      });
 
       let classes = styles.match(/\.([a-z0-9\-_])*/gi).map(function(str){
         if(str.charAt(0) == "."){
@@ -53,6 +56,8 @@ $(document).ready(function() {
       let outputArray = [];
       let count = 0;
 
+      // uniqueClasses and htmlClasses are compared here and
+      // push anything that isn't matched into outputArray
       $.grep(uniqueClasses, function(el) {
         if($.inArray(el, htmlClasses) == -1)
           outputArray.push(el);
@@ -61,9 +66,14 @@ $(document).ready(function() {
 
       $.each(outputArray, function(index, value){
         if(value != undefined){
-          $('#match').append("<div>" + value + "</div>");
+          $('#extraClasses').append("<div>" + value + "</div>");
         }
       });
+
+
+      function clearDivs(){
+        $('#extraClasses').html("");
+      };
 
   })
 });

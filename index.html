@@ -4,23 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Class Checker</title>
-<style>
-*{
- font-family:Arial, Helvetica, sans-serif;
- font-size:16px;
- color:#333;
-}
-h1,p{margin:4px 0;}
-.container{margin-left:auto; margin-right:auto; width:90%;}
-button{padding:15px 30px; background-color:#069; color:#FFF; cursor:pointer; margin:10px 0; border:none;}
-button:hover{background-color:#346392;}
-textarea{width:100%;}
-#results{color:#666;}
-#left,#right{width:50%; float:left;}
-#match,#fail{display:flex; flex-direction:row; flex-wrap:wrap; flex-flow:row wrap;}
-#match > div{color:#090; margin:2px 6px; border:1px solid #CCC; padding:4px;}
-#fail > div{color:#C00; margin:2px 6px; border:1px solid #CCC; padding:4px;}
-</style>
+<link rel="stylesheet" type="text/css" href="./styles.css" />
 </head>
 <body>
 <div class="container">
@@ -28,15 +12,11 @@ textarea{width:100%;}
   <h1>Copy/Paste your HTML into the box below, then click Check to validate your CSS.</h1>
   <h3>The output will be all classes that are in the 'style' tag but not currently being used in the body of the HTML.</h3>
   <textarea id="inputHTML" rows="10"></textarea>
-  <button id="checkIt">Check</button>
+  <button id="sendIt">Send It</button>
   <div id="results">
    <div id="left">
-    <strong>Matching Classes</strong>
-    <div id="match"></div>
-   </div>
-   <div id="right">
-    <strong>Failing Classes</strong>
-    <div id="fail"></div>
+    <strong>Classes not used in HTML</strong>
+    <div id="extraClasses"></div>
    </div>
   </div>
 </div>
