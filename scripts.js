@@ -4,7 +4,7 @@ $(document).ready(function() {
     let fail = $('#fail').text();
     let pass = $('#match').text();
     userInput = $.trim(userInput);
-    let styleTop = userInput.indexOf("<style>");
+    let styleTop = userInput.indexOf("<style");
     let styleBott = userInput.indexOf("</style>");
     let styleTag = styleBott - styleTop;
     let newArray = [];
@@ -26,45 +26,44 @@ $(document).ready(function() {
         alert("No classes were found.");
       }
 
-      let sortArray = newArray.filter(function(value, index, array){
-        if(value){
-          return index=array.indexOf(value);
-        }
-      });
-
       if(userInput.indexOf("style")==-1){
         alert("No style tag in head!!");
       }else{
         styles = userInput.substr(styleTop, styleTag);
       }
 
-      // let classNames = styles.substr(".", styles.indexOf("{"));
+      });
+
       let classes = styles.match(/\.([a-z0-9\-_])*/gi).map(function(str){
         if(str.charAt(0) == "."){
           str = str.slice(1);
         }
-        // console.log(str);
         return str;
       });
 
-      let matched;
-      let notMatched;
+      let removeDupes = (arr) => {
+        let a = new Set(arr);
+        let b = a.values();
+        return Array.from(b);
+      }
 
-      $.each(sortArray, function(index, htmlValue){
-        // console.log(value);
-        $.each(classes, function(i, headValue){
-          if(htmlValue == headValue){
-            console.log("matched");
-            matched = headValue;
-          }else{
-            console.log("in style tag but not HTML");
-            notMatched = htmlValue;
-          }
-        })
+      let uniqueClasses = removeDupes(classes);
+      let htmlClasses = removeDupes(newArray);
+
+      let outputArray = [];
+      let count = 0;
+
+      $.grep(uniqueClasses, function(el) {
+        if($.inArray(el, htmlClasses) == -1)
+          outputArray.push(el);
+          count++;
       });
 
-      fail = "Testing string";
+      $.each(outputArray, function(index, value){
+        if(value != undefined){
+          $('#match').append("<div>" + value + "</div>");
+        }
+      });
 
-    });
   })
 });
